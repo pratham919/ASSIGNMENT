@@ -1,0 +1,78 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct abc
+{
+char name[20];
+int pr;
+struct abc *prv;
+struct abc *next;
+};
+void main()
+{
+
+struct abc *head;
+head=(struct abc*)malloc(sizeof(struct abc));
+printf("ENTER THE NAME OF PRESIDENT\n");
+scanf(" %s",head->name);
+printf("ENTER THE PRN NUMBER \n");
+scanf("%d",&head->pr);
+
+head->prv=NULL;
+head->next=NULL;
+inserts(head);
+int y,ch;
+do{
+    printf("\n ENTER 1 TO ADD THE MEMBER \n ENTER 2 TO DELETE THE MEBER \n ENTER 3 TO DELETE THE PRESIDENT \n ENTER 4 TO DELETE THE SECRETARY \n ENTER 6 TO DISPLAY LIST OF MEMBER \n");
+scanf("%d",&ch);
+switch(ch)
+{
+    case 1:insertm(head);
+    break;
+    case 6:display(head);
+    break;
+    
+}
+
+}while(y==1);
+}
+
+
+void inserts(struct abc*head){
+    struct abc*new;
+    new=(struct abc*)malloc(sizeof(struct abc));
+    printf("ENTER THE NAME OF SECRETARY\n");
+    scanf(" %s",new->name);
+    printf("ENTER THE PRN NUMBER\n");
+    scanf("%d",&new->pr);
+    new->prv=head;
+    head->next=new;
+    new->next=NULL;
+   
+}
+void insertm(struct abc*head)
+{
+struct abc*new;
+new=(struct abc*)malloc(sizeof(struct abc));
+printf("ENTER THE NAME OF THE MEMBER: ");
+scanf(" %s",new->name);
+printf("ENTER THE PRN NUMBER: ");
+scanf("%d",&new->pr);
+new->next=NULL;
+new->prv=NULL;
+new->next=head->next;
+new->next->prv=new;
+head->next=new;
+new->prv=head;
+
+}
+void display(struct abc*head)
+{
+    struct abc*temp;
+    temp=head;
+    while(temp!=NULL)
+    {
+        printf("NAME :%s  PRN:%d",temp->name,temp->pr);
+        temp=temp->next;
+        printf("\n");
+    }
+}
