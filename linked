@@ -7,36 +7,36 @@ int pr;
 struct abc *prv;
 struct abc *next;
 };
-void main()
+void reverse(struct abc*head,struct abc*temp)
 {
-
-struct abc *head;
-head=(struct abc*)malloc(sizeof(struct abc));
-printf("ENTER THE NAME OF PRESIDENT\n");
-scanf(" %s",head->name);
-printf("ENTER THE PRN NUMBER \n");
-scanf("%d",&head->pr);
-
-head->prv=NULL;
-head->next=NULL;
-inserts(head);
-int y,ch;
-do{
-    printf("\n ENTER 1 TO ADD THE MEMBER \n ENTER 2 TO DELETE THE MEBER \n ENTER 3 TO DELETE THE PRESIDENT \n ENTER 4 TO DELETE THE SECRETARY \n ENTER 6 TO DISPLAY LIST OF MEMBER \n");
-scanf("%d",&ch);
-switch(ch)
+    if(temp!=NULL)
+    {
+        printf(" %s %d \n",temp->name,temp->pr);
+        temp=temp->prv;
+        reverse(head,temp);
+    }
+}
+void count(struct abc*head)
 {
-    case 1:insertm(head);
-    break;
-    case 6:display(head);
-    break;
-    
+    int c=1;
+    struct abc*temp;
+    temp=head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+        c++;
+    }
+    printf("%d is the no of count of memebers",c);
 }
-
-}while(y==1);
+struct abc*deletep(struct abc*head)
+{
+    struct abc*temp;
+    temp=head;
+    head=head->next;
+    head->prv=NULL;
+    free(temp);
+    return head;
 }
-
-
 void inserts(struct abc*head){
     struct abc*new;
     new=(struct abc*)malloc(sizeof(struct abc));
@@ -75,4 +75,60 @@ void display(struct abc*head)
         temp=temp->next;
         printf("\n");
     }
+}
+void deletes(struct abc*head)
+{
+    struct abc*temp;
+    temp=head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+       
+    }
+       temp->prv->next=NULL;
+       free(temp);
+   
+}
+void main()
+{
+
+struct abc *head;
+head=(struct abc*)malloc(sizeof(struct abc));
+printf("ENTER THE NAME OF PRESIDENT\n");
+scanf(" %s",head->name);
+printf("ENTER THE PRN NUMBER \n");
+scanf("%d",&head->pr);
+struct abc*temp;
+head->prv=NULL;
+head->next=NULL;
+inserts(head);
+int y,ch;
+do{
+    printf("\n ENTER 1 TO ADD THE MEMBER \n ENTER 2 TO DISPLAY IN REVERSE ORDER \n ENTER 3 TO DELETE THE PRESIDENT \n ENTER 4 TO DELETE THE SECRETARY \nENTER 5 TO DISPLAY TOTAL NUMBER OF MEMEBERS \n ENTER 6 TO DISPLAY LIST OF MEMBER \n");
+scanf("%d",&ch);
+switch(ch)
+{
+    case 1:insertm(head);
+    break;
+    case 2:temp=head;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    reverse(head,temp);
+    break;
+    case 3:deletep(head);
+    break;
+    case 4:deletes(head);
+    break;
+    case 5:count(head);
+    break;
+    case 6:display(head);
+    break;
+   
+}
+printf("CONTINUE: 1 EXIT:0");
+scanf("%d",&y);
+
+}while(y==1);
 }
